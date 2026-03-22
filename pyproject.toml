@@ -1,0 +1,28 @@
+[project]
+name = "mutualfunds-prospectus-analyser"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.5.5",
+    "docling>=2.81.0",
+    "docling-core>=2.70.2",
+    "fastapi>=0.135.1",
+    "langchain>=1.2.13",
+    "langchain-chroma>=1.1.0",
+    "langchain-core>=1.2.20",
+    "langchain-openai>=1.1.11",
+    "numpy>=2.4.3",
+    "openai>=2.29.0",
+    "pandas>=2.3.3",
+    "pillow>=12.1.1",
+    "pymupdf>=1.27.2.2",
+    "python-dotenv>=1.2.2",
+    "python-multipart>=0.0.22",
+    "requests>=2.32.5",
+    "sentence-transformers>=5.3.0",
+    "streamlit>=1.55.0",
+    "transformers>=4.57.6",
+    "uvicorn>=0.42.0",
+]
