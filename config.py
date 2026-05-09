@@ -1,5 +1,12 @@
 # This file contains the configuration (paramters, llm model, embedding models) used in the project
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 # ChromaDB settings
 CHROMA_PERSIST_DIR = "./chroma_db"
 COLLECTION_NAME = "mf_prospectus_rag"
@@ -9,6 +16,7 @@ EMBEDDING_MODEL = "text-embedding-3-small"
 
 # LLM settings
 VLM_MODEL = "gpt-4o-mini"
+LLM_MODEL = "gpt-4o-mini"
 LLM_TEMPERATURE = 0.1
 
 # Tokenizer settings

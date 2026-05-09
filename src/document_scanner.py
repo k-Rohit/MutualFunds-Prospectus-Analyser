@@ -7,10 +7,17 @@
 import json
 import fitz  
 import base64
+import sys
+from pathlib import Path
 from typing import List, Dict, Tuple
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage
 from dotenv import load_dotenv
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+     sys.path.insert(0, str(PROJECT_ROOT))
+
 load_dotenv()
 from config import *
 from prompts import *
@@ -60,25 +67,25 @@ class DocumentScanner:
      e. “Merge repeated/continued sections into one clean structure.”
      """
      
-     # init vision llm
+     def __init__(self):
+          # Vision LLM for page images.
+          self.vision_llm = ChatOpenAI(
+               model=VLM_MODEL,
+               temperature=LLM_TEMPERATURE,
+               max_tokens=2000,
+               openai_api_key=OPENAI_API_KEY
+          )
 
-     self.vision_llm = ChatOpenAI(
-          model = VLM_MODEL,
-          temperature=LLM_TEMPERATURE,
-          max_tokens=2000,
-          openai_api_key=OPENAI_API_KEY  
-     )
-     
-     # init lext llm
-     self.text_llm = ChatOpenAI(
-          model = VLM_MODEL,
-          temperature=LLM_TEMPERATURE,
-          max_tokens=4000,
-          openai_api_key=OPENAI_API_KEY  
-     )
-     
-     self.discovered_sections: Dict = {}
-     self.validation_result: Dict = {}
+          # Text LLM for consolidation, no images needed.
+          self.text_llm = ChatOpenAI(
+               model=LLM_MODEL,
+               temperature=LLM_TEMPERATURE,
+               max_tokens=4000,
+               openai_api_key=OPENAI_API_KEY
+          )
+
+          self.discovered_sections: Dict = {}
+          self.validation_result: Dict = {}
      
      @staticmethod
      def _render_page_to_image(pdf_path: str, page_idx: int,
@@ -344,7 +351,7 @@ class DocumentScanner:
                     )
 
           prompt = SECTION_CONSOLIDATION_PROMPT.format(
-               page_analysis=analysis_text
+               page_analyses=analysis_text
           )
           response = self.text_llm.invoke(prompt)
           result = self._parse_json_response(response.content)
