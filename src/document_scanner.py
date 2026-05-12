@@ -255,8 +255,14 @@ class DocumentScanner:
           
           Returns
           -------
-          dict  –  ``{section_key: {title, description, subsections, keywords, pages}}``
-                    (same shape the rest of the pipeline expects)
+          dict  –  ``{
+               section_key: 
+                              {title, 
+                              description, 
+                              subsections, 
+                              keywords, 
+                              pages}
+                    }``
           """
           total_pages = self._get_page_count(pdf_path)
           memory = SlidingWindowMemory(window_size=PAGE_MEMORY_WINDOW)
