@@ -11,7 +11,7 @@
 #   GET  /chunks              - Get chunks (optionally filtered by page)
 
 
-# Run with:  uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+# Run with:  uvicorn api:app --host 0.0.0.0 --port 8082 --reload
 
 import os
 import io
@@ -27,10 +27,14 @@ from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from ..src.document_processor import DocumentProcessor
-from ..src.document_scanner import DocumentScanner
-from ..src.rag_engine import RagEngine
-from ..src.section_extractor import SectionExtractor
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+from src.document_processor import DocumentProcessor
+from src.document_scanner import DocumentScanner
+from src.rag_engine import RagEngine
+from src.section_extractor import SectionExtractor
 
 
 app = FastAPI(
@@ -384,6 +388,6 @@ def get_chunks(page: Optional[int] = Query(None)):
 # =============================================================================
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api.api:app", host="0.0.0.0", port=8000, reload=True)
      
      
