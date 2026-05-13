@@ -98,7 +98,6 @@ class SectionExtractor:
         keywords = cfg.get("keywords", [])
 
         print(f"Extracting section: {title}")
-
         # Retrieve relevant chunks (keywords improve query)
         chunks = self.rag.search_for_section(
             title, description, subsections, keywords=keywords
